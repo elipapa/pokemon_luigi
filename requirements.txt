@@ -1,0 +1,15 @@
+backports-abc==0.5
+certifi==2016.9.26
+decorator==4.0.10
+docutils==0.13.1
+lockfile==0.12.2
+luigi==2.4.0
+pbr==1.10.0
+python-daemon==2.1.2
+singledispatch==3.4.0.3
+six==1.10.0
+SQLAlchemy==1.1.4
+sqlalchemy-migrate==0.10.0
+sqlparse==0.2.2
+Tempita==0.5.2
+tornado==4.4.2
