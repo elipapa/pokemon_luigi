@@ -6,12 +6,12 @@ import luigi
 import settings
 
 
-POKEMON_CSV = "datasets/pokemon_cleaned.csv"
-
 class LoadPokemonTask(sqla.CopyToTable):
     """
     Add pokemon data from csv file
     """
+    csv_file = luigi.Parameter(default="datasets/pokemon_cleaned.csv")
+
     table = "pokemon_base"
     columns = [
         (['id', Integer], {"primary_key": True}),
@@ -35,7 +35,7 @@ class LoadPokemonTask(sqla.CopyToTable):
     def rows(self):
 
         pokemon = []
-        with open(POKEMON_CSV, "r") as reader:
+        with open(self.csv_file, "r") as reader:
             csvreader = csv.reader(reader)
             next(csvreader)  # first line is header
 

@@ -16,6 +16,9 @@ Example ETL pipeline task using luigi
 # run the luigi task
 # PYTHONPATH is required as luigi only uses modules in the global path
 > PYTHONPATH=. luigi --local-scheduler --module pokemon_etl PokemonAddTypeCounts
+# use --PokemonLoadTask-csv-file to load a specific dataset
+> PYTHONPATH=. luigi --local-scheduler --module pokemon_etl \
+> PokemonAddTypeCounts --LoadPokemonTask-csv-file datasets/pokemon_cleaned.csv
 # verify the results in the db
 > sqlite3 -csv -batch pokemon.db "SELECT * FROM pokemon_type_counts ORDER BY type_1_count DESC"
 ```
