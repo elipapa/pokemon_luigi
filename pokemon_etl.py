@@ -10,7 +10,6 @@ class LoadPokemonTask(sqla.CopyToTable):
     """
     Add pokemon data from csv file
     """
-    csv_file = luigi.Parameter(default="datasets/pokemon_cleaned.csv")
 
     table = "pokemon_base"
     columns = [
@@ -30,7 +29,8 @@ class LoadPokemonTask(sqla.CopyToTable):
         (['created', DateTime], {})
         ]
 
-    connection_string = settings.DATABASES['pokemon']
+    connection_string = settings.pokemon.db_connection
+    csv_file = settings.pokemon.csv_file
 
     def rows(self):
 
@@ -48,14 +48,16 @@ class PokemonAddTypeCounts(luigi.Task):
     """
     Add counts for types
     """
+    connection_string = settings.pokemon.db_connection
     table = 'pokemon_type_counts'
+
 
     def requires(self):
         return LoadPokemonTask()
 
     def output(self):
         return sqla.SQLAlchemyTarget(
-            settings.DATABASES['pokemon'], self.table, self.task_id)
+            self.connection_string, self.table, self.task_id)
 
     def run(self):
         last_run = self._get_last_run()
